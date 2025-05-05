@@ -1,94 +1,73 @@
+import { useNavigation } from "@react-navigation/native";
+import { Image, Text, View, ScrollView } from "react-native";
+import FastImage from "react-native-fast-image";
+import Gif from 'react-native-gif';
+import { User_List } from "./ui/user_list";
+import { User } from "../../features/type";
+import { Restaurant_List } from "./ui/restaurant_list";
 
+const users:User[] = [{
+    name: '배세강',
+    department: '컴퓨터공학과',
+    student_number: 24,
+    gender: '남자',
+    MBTI:'ENFP'
+},{
+    name: '배세강',
+    department: '컴퓨터공학과',
+    student_number: 24,
+    gender: '남자',
+    MBTI:'ENFP'
+},
+]
 
-
-import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {View, Button, Text} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import { useNavigation } from '@react-navigation/native';
-
-const Tab = createBottomTabNavigator();
-
-function MainScreen() {
-  return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        tabBarActiveTintColor: '#fb8c00',
-        tabBarShowLabel: false
-      }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({color, size}) => (
-            <MaterialIcon name="home" color={color} size={size} />
-          ),
-          headerShown: false
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{
-          title: '알림',
-          tabBarIcon: ({color, size}) => (
-            <MaterialIcon name="notifications" color={color} size={size} />
-          ),
-          headerShown: false
-
-        }}
-      />
-      <Tab.Screen
-        name="Notification"
-        component={NotificationScreen}
-        options={{
-          title: '검색',
-          tabBarIcon: ({color, size}) => (
-            <MaterialIcon name="search" color={color} size={size} />
-          ),
-          headerShown: false
-
-        }}
-      />
-      <Tab.Screen
-        name="Message"
-        component={MessageScreen}
-        options={{
-          title: '메시지',
-          tabBarIcon: ({color, size}) => (
-            <MaterialIcon name="message" color={color} size={size} />
-          ),
-          headerShown: false
-
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
-function HomeScreen() {
-    const navigation = useNavigation<any>()
-    return (
+const HomeScreen = () => {
+    return(
         <View>
-        <Text>Home</Text>
-        <Button
-            title="상세보기"
-            onPress={() => navigation.navigate('Detail', {id: 1})}
-        />
+<ScrollView contentContainerStyle={{ flexDirection: 'column', alignItems: 'center' }} className="px-4 py-6">
+            <View className="flex justify-start w-full mb-1">
+                <Text className="text-2xl font-['owngly']">현재 상황</Text>
+            </View>
+            <View className="flex flex-row w-full h-32 mb-8 align-middle bg-white rounded-lg">
+
+                <Image
+                    source={require('../../asset/gif/ku_char_img.gif')}  // 로컬 GIF
+                    style={{ width: 100, height: 100 }}
+                />
+                <View className="flex justify-center w-full h-full ml-8">
+                    <Text className="text-2xl font-['owngly']">남은 밥약: 7개</Text>
+                    <View className="h-2"/>
+                    <Text className="text-2xl font-['owngly']">2시간 후에 밥약이 있어요!</Text>
+                </View>
+                
+            </View>
+
+
+            <View className="flex justify-start w-full mb-8">
+                <Text className="text-2xl font-['owngly'] mb-1">맛집 탐방</Text>
+                <Restaurant_List/>
+
+            </View>
+
+            <View className="items-start w-full">
+                <Text className="text-2xl font-['owngly'] mb-1">밥약 매칭</Text>
+
+            </View>
+
+            <View className="flex justify-start w-full">
+                <User_List users={users} handleButton={()=>{}} title="밥약해주세요!"/>
+            </View>
+
+
+
+            <View className="flex justify-start w-full mb-12">
+                <Text className="text-2xl font-['owngly']"></Text>
+                <User_List users={users} handleButton={()=>{}} title="밥약 해줄게요!"/>
+
+            </View>
+        </ScrollView>
         </View>
-    );
+    )
 }
 
-function SearchScreen() {
-  return <Text >Search</Text>;
-}
-
-function NotificationScreen() {
-  return <Text>Notification</Text>;
-}
-
-function MessageScreen() {
-  return <Text>Message</Text>;
-}
-
-export {MainScreen}
+export {HomeScreen}
